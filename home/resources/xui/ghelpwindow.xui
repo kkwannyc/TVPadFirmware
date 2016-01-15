@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GVUI version="0.1">
+<GWindow>
+	<id>6</id>
+    <name>help window</name>
+	<geometry>(660,30,530,620)</geometry>	
+	<item index="0" class="GLabel" name="title">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(10,10,200,35)</geometry>
+			<fontsize>25</fontsize>
+			<alignment>AlignLeft</alignment>
+			<multiline>1</multiline>
+			<color_disable>(0,0,0,255)</color_disable>
+			<caption>帮助</caption>
+		</attribute>
+    </item>
+    <item index="5" class="GLine" name="linetop">
+        <action>linetop</action>
+		<href>GLine</href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(10,45,510,3)</geometry>
+			<fontsize>20</fontsize>
+			<color>(0,0,0,128)</color>
+			<alignment>AlignLeft</alignment>
+			<flag>Horizontal</flag>
+		</attribute>
+    </item>
+    <item index="6" class="GLine" name="lineleft">
+        <action>lineleft</action>
+		<href>GLine</href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(10,45,3,530)</geometry>
+			<fontsize>20</fontsize>
+			<color>(0,0,0,128)</color>
+			<alignment>AlignLeft</alignment>
+			<flag>Vertical</flag>
+		</attribute>
+    </item>
+    <item index="7" class="GLine" name="lineright">
+        <action>lineright</action>
+		<href>GLine</href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(520,45,3,530)</geometry>
+			<fontsize>20</fontsize>
+			<color>(255,255,255,128)</color>
+			<alignment>AlignLeft</alignment>
+			<flag>Vertical</flag>
+		</attribute>
+    </item>
+    <item index="8" class="GLine" name="linebottom">
+        <action>linebottom</action>
+		<href>GLine</href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(10,575,510,3)</geometry>
+			<fontsize>20</fontsize>
+			<color>(255,255,255,128)</color>
+			<alignment>AlignLeft</alignment>
+			<flag>Horizontal</flag>
+		</attribute>
+    </item>
+	<item index="3" class="GLabel" name="content">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(15,50,500,520)</geometry>
+			<fontsize>18</fontsize>
+			<alignment>AlignLeft</alignment>
+			<multiline>1</multiline>
+		</attribute>
+    </item>
+	<item index="9" class="GImageWidget" name="top">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(10,580,30,30)</geometry>
+			<alignment>AlignCenter</alignment> 
+		</attribute>
+    </item>
+	<item index="10" class="GImageWidget" name="down">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(45,580,30,30)</geometry>
+<alignment>AlignCenter</alignment> 
+		</attribute>
+    </item>
+	<item index="1" class="GLabel" name="note1">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(80,580,150,30)</geometry>
+			<fontsize>20</fontsize>
+			<alignment>AlignLeft</alignment>
+			<multiline>1</multiline>
+			<color_disable>(0,0,0,255)</color_disable>
+			<caption>用于翻页</caption>
+		</attribute>
+    </item>
+<!--
+	<item index="11" class="GImageWidget" name="exit">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(185,580,30,30)</geometry>
+<alignment>AlignCenter</alignment> 
+		</attribute>
+    </item>	
+	<item index="12" class="GLabel" name="note2">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(225,580,50,30)</geometry>
+			<fontsize>20</fontsize>
+			<alignment>AlignLeft</alignment>
+			<multiline>1</multiline>
+			<color_disable>(0,0,0,255)</color_disable>
+			<caption>退出</caption>
+		</attribute>
+    </item>
+--> 
+	<item index="12" class="GLabel" name="note2">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(225,580,50,30)</geometry>
+			<fontsize>20</fontsize>
+			<alignment>AlignLeft</alignment>
+			<multiline>1</multiline>
+			<color_disable>(0,0,0,255)</color_disable>
+			<caption>退出</caption>
+		</attribute>
+    </item>
+	<item index="4" class="GLabel" name="count">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(500,580,40,30)</geometry>
+			<fontsize>20</fontsize>
+			<alignment>AlignLeft</alignment>
+			<multiline>1</multiline>
+			<color_disable>(0,0,0,255)</color_disable>
+		</attribute>
+    </item>
+</GWindow>
+</GVUI>

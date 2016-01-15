@@ -1,0 +1,36 @@
+###############################################
+# mmc devices
+KERNEL=="mmcblk[0-9]*", NAME="%k", ACTION=="add", RUN+="/etc/udev/mount.sh add %k"
+KERNEL=="mmcblk[0-9]*", ACTION=="remove", RUN+="/etc/udev/mount.sh remove %k"
+
+###############################################
+# scsi devices
+KERNEL=="sd[a-z]*", NAME="%k", ACTION=="add", RUN+="/etc/udev/mount.sh add %k"
+KERNEL=="sd[a-z]*", ACTION=="remove", RUN+="/etc/udev/mount.sh remove %k"
+
+###############################################
+# rtc device
+KERNEL=="rtc0", SYMLINK+="rtc"
+SUBSYSTEM=="input", KERNEL=="event[0-9]*", SYSFS{modalias}=="input:*-e0*,3,*a0,1,*18,*", 
+
+###############################################
+# input devices
+KERNEL=="mice",                 NAME="input/%k"
+KERNEL=="mouse[0-9]*",          NAME="input/%k"
+KERNEL=="event[0-9]*",          NAME="input/%k"
+KERNEL=="js[0-9]*",             NAME="input/%k"
+KERNEL=="ts[0-9]*",             NAME="input/%k"
+KERNEL=="uinput",               NAME="input/%k"
+
+###############################################
+# Create a symlink to any touchscreen input device
+SUBSYSTEM=="input", KERNEL=="event[0-9]*", SYSFS{modalias}=="input:*-e0*,3,*a0,1,*18,*", SYMLINK+="input/touchscreen0"
+
+###############################################
+# Create a symlink
+KERNEL=="hd[a-z]", SYSFS{removable}=="1", SYMLINK+="cdrom_%b"
+KERNEL=="hd[a-z]", SYSFS{removable}=="1", SYMLINK+="dvd_%b"
+
+###############################################
+# firmware 
+#SUBSYSTEM=="firmware", ACTION=="add", RUN+="firmware_test.sh"

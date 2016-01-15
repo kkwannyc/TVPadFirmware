@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GVUI version="0.1">
+<GPageView>
+	<id>0</id>
+	<name>volumeBar</name>
+	<geometry>(0,0,670,50)</geometry>
+	<item index="0" class="GImageWidget" name="volumImage">
+		<action>volumImage</action>
+		<href>GImageWidget</href>
+		<attribute>
+		<focus>disable</focus>
+		<stretch>geometry</stretch>
+		<geometry>(10,7,36,36)</geometry>
+		<alignment>AlignCenter</alignment>
+		</attribute>
+	</item>
+	<item index="1" class="GProgress" name="progressBar">
+		<action>progressBar</action>
+		<href>GProgress</href>
+		<attribute>
+		<focus>disable</focus>
+		<geometry>(56,10,530,30)</geometry>
+		<alignment>AlignCenter</alignment>
+		</attribute>
+	</item>
+	<item index="2" class="GLabel" name="percentLabel">
+		<action>percentLabel</action>
+		<href>GLabel</href>
+		<attribute>
+		<focus>disable</focus>
+		<geometry>(596,10,64,30)</geometry>
+		<fontsize>28</fontsize>
+		<alignment>AlignCenter</alignment>
+		</attribute>
+	</item>
+</GPageView>
+</GVUI>

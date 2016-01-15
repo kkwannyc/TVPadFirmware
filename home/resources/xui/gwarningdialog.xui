@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GVUI version="0.1">
+<GWindow>
+	<id>2</id>
+    <name>warning dialog</name>
+	<geometry>(460,240,360,240)</geometry>
+	<item index="0" class="GImageWidget" name="gimagewidget1">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(20,45,320,100)</geometry>
+			<fontsize>30</fontsize>
+			<alignment>AlignVCenter | AlignLeft</alignment>
+		</attribute>
+    </item>	
+    <item index="1" class="GLabel" name="glabel1">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(20,145,320,80)</geometry>
+			<fontsize>20</fontsize>
+			<alignment>AlignCenter</alignment>
+			<multiline>1</multiline>
+			<caption>label1</caption>
+		</attribute>
+    </item>    
+</GWindow>
+</GVUI>

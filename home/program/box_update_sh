@@ -1,0 +1,45 @@
+#!/bin/sh
+mount -o remount, rw /home
+
+targetname=gvos_telechips_$1.tar.gz
+rm $targetname
+wget http://192.168.2.122/xampp/test/$targetname
+if [ -f $targetname ]; then
+	echo "download sucess!"
+else
+	echo "download failed!"
+	exit	
+fi
+
+if [ "$1" = "all" ]; then
+	echo "not support, please input target like desktop"
+	exit
+elif [ "$1" = "sdk" ]; then	
+	tar zxvf $targetname -C .
+	cp sdk/lib/* /home/lib
+
+	rm -rf /home/resources
+	mv sdk/resources /home
+
+	rm -rf /home/program/ime	
+	rm -rf /home/program/widgetstest
+	mv sdk/bin/* /home/program
+	rm -rf sdk
+elif [ "$1" = "lib" ]; then
+	tar zxvf $targetname -C /home	
+elif [ "$1" = "desktop" -o "$1" = "setting" -o "$1" = "vediomanager" -o "$1" = "musicmanager" -o "$1" = "startguider" -o "$1" = "sysmessage" ]; then
+	rm -rf /home/program/$1
+	tar zxvf $targetname -C /home/program
+elif [ "$1" = "vod" ]; then
+	rm -rf /program/usbapp/vod*
+	tar zxvf $targetname -C /program/usbapp
+	mv /program/usbapp/vod/* /program/usbapp/
+	rm -rf /program/usbapp/vod 
+else
+	rm -rf /program/usbapp/$1
+	tar zxvf $targetname -C /program/usbapp
+fi
+
+rm $targetname
+sync
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--tvsystem="ntsc pal" -->
+<system oem="creatent" hw="M121S_3311_GVOS2" video="hdmi:cvbs" tvsystem="pal" deflanguage="en">
+	<language_table>
+		<language index="0" code="en" caption="English"></language>
+		<language index="1" code="zh_CN" caption="简体中文"></language>
+		<language index="2" code="zh_TW" caption="繁體中文"></language>
+		<language index="3" code="ko" caption="한국어"></language>
+		<language index="4" code="ja" caption="日本語"></language>
+	</language_table>
+</system>

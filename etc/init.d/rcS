@@ -1,0 +1,115 @@
+#!/bin/sh
+# mount all the devices listed in /etc/fstab
+
+mount /proc
+mount /dev/pts
+mount /tmp
+mount /sys
+
+#/usr/etc/profile
+
+
+#grep -q 'dnmode=multi' /proc/cmdline 2>/dev/null
+#if [ "$?" = "0" ]; then
+#        /bin/canna
+#        exit 0
+#fi
+
+#grep -q 'dnmode=single' /proc/cmdline 2>/dev/null
+#if [ "$?" = "0" ]; then
+#        /bin/canna -s
+#        exit 0
+#fi
+
+#grep -q 'resetmode=hard' /proc/cmdline 2>/dev/null
+
+
+###################################################
+# Symbolic Link Console dev
+###################################################
+grep -q 'TCC8900' /proc/cpuinfo 2>/dev/null
+if [ "$?" = "0" ]; then
+	TCC_ARCH="TCC8900"
+	ln -s /dev/ttySAC0 /dev/ttySACX
+fi
+grep -q 'AX' /proc/cpuinfo 2>/dev/null
+if [ "$?" = "0" ]; then
+	TCC_REV="AX"
+fi
+grep -q 'XX' /proc/cpuinfo 2>/dev/null
+if [ "$?" = "0" ]; then
+	TCC_REV="XX"
+fi
+
+
+###################################################
+# NAND DRIVER
+###################################################
+## insmod NAND driver
+insmod /lib/modules/TCC8900_nand.ko
+
+## nand block queue scheduler --> noop
+grep -q 'ndda' /proc/partitions 2>/dev/null
+if [ "$?" = "0" ]; then
+	echo noop > /sys/block/ndda/queue/scheduler
+fi
+
+/bin/mount -a
+## mount NAND partitions
+#grep -q 'ndda4' /proc/partitions 2>/dev/null
+#if [ "$?" = "0" ]; then
+#	mount -o utf8,noatime /dev/ndda4 /backup
+#fi
+#grep -q 'ndda3' /proc/partitions 2>/dev/null
+#if [ "$?" = "0" ]; then
+#	mount -o utf8,noatime /dev/ndda3 /storage
+#fi
+#grep -q 'ndda2' /proc/partitions 2>/dev/null
+#if [ "$?" = "0" ]; then
+#	mount -o utf8,noatime /dev/ndda2 /setting
+#fi
+#grep -q 'ndda1' /proc/partitions 2>/dev/null
+#if [ "$?" = "0" ]; then
+#	mount -o utf8,noatime /dev/ndda1 /home
+#else
+#	mount -o utf8,noatime /dev/ndda /home
+#fi
+
+
+###################################################
+# USB OTG Compliance Test
+###################################################
+#### insmod USB File-backed Storage Gadget driver
+#insmod /lib/modules/g_file_storage.ko file=/dev/ndda1
+
+### printk level
+#/usr/sbin/printk 3
+
+
+###################################################
+# HDMI DRIVER
+###################################################
+ln -s /dev/i2c-0 /dev/i2c-7
+insmod /lib/modules/hpd.ko
+insmod /lib/modules/hdmidrv.ko
+
+###################################################
+# HDMI DRIVER
+###################################################
+if [ $TCC_ARCH = "TCC8900" ]; then
+	insmod /lib/modules/ufsd.ko
+fi
+
+###################################################
+# boot splash
+###################################################
+
+
+###################################################
+# ETHERNET DRIVER
+###################################################
+insmod /lib/modules/rt3370sta.ko
+insmod /lib/modules/8712u.ko
+insmod /lib/modules/tcc_dm9000.ko
+/usr/sbin/initmac
+

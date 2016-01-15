@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GVUI version="0.1">
+<GWidgetGroup>
+	<id>3</id>
+    <name>gstatus info</name>
+	<geometry>(460,240,360,240)</geometry>
+	<item index="0" class="GImageWidget" name="gstatus-up">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(0,0,45,45)</geometry>
+		</attribute>
+    </item>	
+	<item index="1" class="GImageWidget" name="gstatus-down">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(45,0,45,45)</geometry>
+		</attribute>
+    </item>	
+	<item index="2" class="GImageWidget" name="gstatus-left">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(90,0,45,45)</geometry>
+		</attribute>
+    </item>	
+	<item index="3" class="GImageWidget" name="gstatus-right">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(135,0,45,45)</geometry>
+		</attribute>
+    </item>	
+    <item index="4" class="GLabel" name="info1">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(180,0,180,45)</geometry>
+			<fontsize>24</fontsize>
+			<color>(230,230,230,255)</color>
+			<color_disable>(230,230,230,255)</color_disable>
+			<alignment>AlignVCenter | AlignVLeft</alignment>
+			<caption>: move focus</caption>
+		</attribute>
+    </item>	
+	<item index="5" class="GImageWidget" name="gstatus-ok">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(360,0,45,45)</geometry>
+		</attribute>
+    </item>	
+    <item index="6" class="GLabel" name="info2">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(405,0,200,45)</geometry>
+			<fontsize>24</fontsize>
+			<color>(230,230,230,255)</color>
+			<color_disable>(230,230,230,255)</color_disable>
+			<alignment>AlignVCenter | AlignVLeft</alignment>
+			<caption>choose</caption>
+		</attribute>
+    </item>    
+</GWidgetGroup>
+</GVUI>

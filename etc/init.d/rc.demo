@@ -1,0 +1,290 @@
+#!/bin/sh
+
+
+mount /dev/ndda1 /home
+mount /dev/ndda2 /program
+mount /dev/ndda3 /backup
+mount /dev/ndda4 /storage
+
+if [ "`mount | grep ndda1 | grep ext2`" != "" ]; then
+	echo "check ndda1"
+	umount /dev/ndda1
+	e2fsck -a -f  /dev/ndda1	
+fi
+
+if [ "`mount | grep ndda2 | grep ext2`" != "" ]; then
+	echo "check ndda2"
+	umount /dev/ndda2
+	e2fsck -a -f  /dev/ndda2	
+fi
+
+if [ "`mount | grep ndda3 | grep ext2`" != "" ]; then
+	echo "check ndda3"
+	umount /dev/ndda3
+	e2fsck -a -f  /dev/ndda3	
+fi
+
+if [ "`mount | grep ndda4 | grep ext2`" != "" ]; then
+	echo "check ndda4"
+	umount /dev/ndda4
+	e2fsck -a -f  /dev/ndda4	
+fi
+
+mount /dev/ndda1 /home
+mount /dev/ndda2 /program
+#mount /dev/ndda3 /backup
+mount /dev/ndda4 /storage
+
+/usr/sbin/videomode
+/usr/sbin/bootsplash /dev/fb1 /usr/share/splash.an &
+
+
+if [ "`ls -A /home | grep program`" = "" ]; then
+#if [ "`ls -A /home`" = "" ]; then	
+		echo "first used mkfs.ext2 home"
+		umount /dev/ndda1
+    	mkfs.ext2  /dev/ndda1
+		mount /dev/ndda1 /home
+    	mount /dev/ndda3 /backup
+		tar xvf /backup/home.tar -C /
+else
+	if [ "`mount | grep ndda1 | grep ext2`" = "" ]; then
+		echo "old version to new,/home need mkfs.ext2"
+		mount /dev/ndda3 /backup
+		echo "rm home.tar in backup"
+		rm -f /backup/home.tar
+		echo "create new home.tar in backup"
+		mkdir /backup/tmpconfig
+		cp -rf /home/config/* /backup/tmpconfig
+		rm /home/config/*
+		cp /backup/tmpconfig/version /home/config
+		cp /backup/tmpconfig/ems.conf /home/config
+		cp /backup/tmpconfig/wpa_supplicant.conf /home/config
+		tar -cvf /backup/home.tar /home
+		sync
+		umount /dev/ndda1
+		mkfs.ext2 /dev/ndda1
+		mount /dev/ndda1 /home
+		echo "fill new data in home from backup"
+		tar xvf /backup/home.tar -C /
+		rm /home/config/*
+		cp -rf /backup/tmpconfig/* /home/config
+		rm -rf /backup/tmpconfig
+		sync
+	fi		
+fi
+
+if [ "`ls -A /program`" = "" ]; then	
+	echo "first used.mkfs.ext2 program"
+    umount /dev/ndda2
+    mkfs.ext2 /dev/ndda2
+    mount /dev/ndda2 /program
+else
+	if [ "`mount | grep ndda2 | grep ext2`" = "" ]; then
+    	umount /dev/ndda2
+    	mkfs.ext2 /dev/ndda2
+    	mount /dev/ndda2 /program
+	fi		
+fi
+
+if [ "`ls -A /storage`" = "" ]; then	
+	echo "first used.mkfs.ext2 storage"
+    umount /dev/ndda4
+    mkfs.ext2 /dev/ndda4
+    mount /dev/ndda4 /storage
+else
+	if [ "`mount | grep ndda4 | grep ext2`" = "" ]; then	
+    	umount /dev/ndda4
+    	mkfs.ext2 /dev/ndda4
+    	mount /dev/ndda2 /storage
+	fi		
+fi
+
+mount /dev/ndda1 /home
+mount /dev/ndda2 /program
+umount /backup	
+mount /dev/ndda4 /storage
+
+check="0"
+if [ -f /home/program/desktop/desktop ];then
+	echo "desktop is exist"
+else
+	echo "desktop is not exist,copy bk to"
+	cp /home/program/desktop/desktop_bk /home/program/desktop/desktop
+	chmod 777 /home/program/desktop/desktop
+	sync 
+fi
+if [ -f /home/program/filelist ];then
+	while read line
+	do
+		if [ -d ${line} ];then
+			continue;
+		fi
+		if [ -f ${line} ];then
+			continue;
+		else
+			echo "${line} is not exist"
+			check="1"
+			break;
+		fi
+	done < /home/program/filelist
+else
+	if [ -f /home/program/filelistcmd ];then
+		echo "/home/filelist is not exist"
+		check="1"
+	else
+		if [ -f /home/program/run.sh ];then
+			check="0"
+		else
+			check="1"
+		fi
+	fi
+fi
+#check="0"
+if [ $check = "1" ]; then
+		echo "************** /home some file is not exist! ***************"
+	echo "************** restore ... ***************"    
+    umount /dev/ndda1
+    mkfs.ext2 /dev/ndda1
+	mount /dev/ndda1 /home
+    mount /dev/ndda3 /backup
+	if [ -f /backup/backuplog.txt ]; 
+	then
+	while   read   LINE;   do 
+		count=`expr $LINE + 1`
+		echo   $count 
+		echo   $count   >   /backup/backuplog.txt
+	done   <  /backup/backuplog.txt
+	else 
+	  echo "1" >> /backup/backuplog.txt; 
+	fi
+
+    #cp /backup/home/* /home/ -rf
+	tar xvf /backup/home.tar -C /
+    sync
+	#mount -o remount, r /home
+    umount /backup
+
+	#rm -rf /program/* > /dev/null 2>&1
+	rm -rf /storage/* > /dev/null 2>&1
+else
+	echo "no update"
+fi
+
+mkdir -p /var/tmp
+mkdir -p /var/run
+mkdir -p /var/log
+mkdir -p /var/lock
+ 
+sync
+udevd --daemon
+udevadm trigger
+ 
+telnetd 
+RESULT=0
+
+if [ -f /storage/check.box ];then
+    echo "************** /home is wrong! ***************"
+	echo "************** restore ... ***************"    
+    umount /dev/ndda1
+    mkfs.ext2 /dev/ndda1
+	mount /dev/ndda1 /home
+    mount /dev/ndda3 /backup
+
+	if [ -f /backup/backuplog.txt ]; 
+	then
+	while   read   LINE;   do 
+		count=`expr $LINE + 1`
+		echo   $count 
+		echo   $count   >   /backup/backuplog.txt
+	done   <  /backup/backuplog.txt
+	else 
+	  echo "1" >> /backup/backuplog.txt; 
+	fi
+
+    #cp /backup/home/* /home/ -rf
+	tar xvf /backup/home.tar -C /
+    sync
+	#mount -o remount, r /home
+    umount /backup
+
+	#rm -rf /program/* > /dev/null 2>&1
+	rm -rf /storage/* > /dev/null 2>&1
+    #reboot
+fi
+chmod 777 /program -R 
+export GV_BIN=/home/bin
+export GV_LIB=/home/lib
+export GV_CONFIG=/home/config
+export GV_PROGRAM=/home/program
+export PATH=$GV_BIN:$GV_PROGRAM:$PATH                                                                                                                          
+mkdir -p /tmp/video                                                             
+mkdir -p /tmp/ppslist                                                           
+ln -s /tmp/ppslist /mnt/ppslist                                                 
+telnetd                                                                          
+cp $GV_CONFIG/ems.conf /etc/                                                               
+                                                                                
+#ifconfig eth0 down                                                             
+#ifconfig eth0 hw ether                                                         
+ifconfig eth0 up                                                                
+ifconfig lo up                                                                  
+                                                                                
+#ifconfig eth0 192.168.2.63 netmask 255.255.255.0                               
+#route add default gw 192.168.2.1                                               
+#echo nameserver 192.168.1.199 > /etc/resolv.conf                               
+                                                                                
+ln -s $GV_LIB/libQtCore.so.4.5.3 /lib/libQtCore.so.4                     
+ln -s $GV_LIB/libQtGui.so.4.5.3 /lib/libQtGui.so.4                       
+ln -s $GV_LIB/libQtNetwork.so.4.5.3 /lib/libQtNetwork.so.4               
+ln -s $GV_LIB/libQtXml.so.4.5.3 /lib/libQtXml.so.4                       
+ln -s $GV_LIB/libfreetype.so.6.3.19 /lib/libfreetype.so.6                
+ln -s $GV_LIB/libiconv.so.2.5.0 /lib/libiconv.so.2                       
+ln -s $GV_LIB/libmad.so.0.2.1 /lib/libmad.so.0                           
+ln -s $GV_LIB/libogg.so.0 /lib/libogg.so.0                               
+ln -s $GV_LIB/libz.so.1.2.3 /lib/libz.so.1                               
+ln -s $GV_LIB/libemsbase.so /lib/libemsbase.so.0                         
+ln -s $GV_LIB/libemsnet.so /lib/libemsnet.so.0                                                 
+ln -s $GV_LIB/libemsbase.so /lib/libemsbase.so  
+ln -s $GV_LIB/libemsnet.so /lib/libemsnet.so
+
+ln -s $GV_LIB/libulockmgr.so.1.0.1 /lib/libulockmgr.so              
+ln -s $GV_LIB/libulockmgr.so.1.0.1 /lib/libulockmgr.so.1
+
+
+ln -s $GV_LIB/libwidgets.so.1.0.0 /lib/libwidgets.so
+ln -s $GV_LIB/libwidgets.so.1.0.0 /lib/libwidgets.so.1
+ln -s $GV_LIB/libwidgets.so.1.0.0 /lib/libwidgets.so.1.0
+
+ln -s $GV_LIB/libgvplayer.so.1.0.0 /lib/libgvplayer.so
+ln -s $GV_LIB/libgvplayer.so.1.0.0 /lib/libgvplayer.so.1
+
+ln -s $GV_LIB/libgvpay.so.1.0.0 /lib/libgvpay.so
+ln -s $GV_LIB/libgvpay.so.1.0.0 /lib/libgvpay.so.1
+ln -s $GV_LIB/libgvpay.so.1.0.0 /lib/libgvpay.so.1.0
+
+ln -s $GV_LIB/libexpat.so.1.5.2 /lib/libexpat.so
+ln -s $GV_LIB/libexpat.so.1.5.2 /lib/libexpat.so.1
+
+ln -s $GV_LIB/libcurl.so.4.2.0 /lib/libcurl.so
+ln -s $GV_LIB/libcurl.so.4.2.0 /lib/libcurl.so.4
+
+
+ln -s $GV_LIB/libxml2.so /lib/libxml2.so.2
+
+                                                                                
+cp $GV_BIN/GVOS_USER_ID /                                                                 
+export LC_ALL=zh_CN.UTF-8                                                       
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GV_LIB                          
+export QWS_DISPLAY=linuxfb:/dev/fb2                                             
+export QT_QWS_FONTDIR=$GV_LIB/fonts                                      
+export QWS_KEYBOARD=USB:/dev/input/event2                                       
+export QT_PLUGIN_PATH=$GV_LIB/plugins                                    
+#export QWS_SIZE=1280x720                                                       
+                                               
+#echo /home/program/core.%p.%e.%t > /proc/sys/kernel/core_pattern                  
+#ulimit -c unlimited                                                            
+ulimit -c 0   
+tcpsvd -E 0.0.0.0 21 ftpd -w / &    
+cd $GV_PROGRAM
+./mipc &
+./run.sh                  

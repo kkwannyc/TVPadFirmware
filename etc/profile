@@ -1,0 +1,12 @@
+#!/bin/sh
+
+DISPLAY=unit:0.0
+HOME=/tmp
+SHELL=/bin/sh
+
+export LC_ALL=zh_CN.UTF-8
+export LD_LIBRARY_PATH=/lib:/home/lib
+export PATH=$PATH:/home/bin:/home/program
+#export LD_LIBRARY_PATH=/nand1/target/lib
+#export PATH=/nand1/bin:$PATH
+

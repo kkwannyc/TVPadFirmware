@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Apps>
+    <class index="0" name="system" icon="/programs/system/1.png">
+		<item en="App Manager" zh_CN="应用管理" zh_TW="應用管理" ko="응용관리" ja="App管理">
+			<id>000001</id>
+			<name>应用管理</name>
+			<version>3.0</version>
+			<description>this is tv app</description>
+			<path>/home/program/appmanagement</path>
+			<icon>appmanagement.png</icon>
+			<exec>appmanagement</exec>
+		</item>
+		<item en="My TVpad" zh_CN="用户中心" zh_TW="用戶中心" ko="고객센터" ja="My TVpad">
+			<id>000002</id>
+			<name>用户中心</name>
+			<version>3.0</version>
+			<description>this is tv app</description>
+			<path>/home/program/usercenter</path>
+			<icon>usercenter.png</icon>
+			<exec>usercenter</exec>
+		</item>
+		<item en="Settings" zh_CN="系统设置" zh_TW="系統設置" ko="설정" ja="設定">
+			<id>000003</id>
+			<name>设置</name>
+			<version>3.0</version>
+			<description>this is tv app</description>
+			<path>/home/program/setting</path>
+			<icon>setting.png</icon>
+			<exec>setting</exec>
+		</item>
+    </class>
+</Apps>

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+mkdir -p /var/tmp
+mkdir -p /var/run
+mkdir -p /var/log
+mkdir -p /var/lock
+
+sync
+udevd --daemon
+udevadm trigger
+

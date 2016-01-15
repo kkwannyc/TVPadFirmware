@@ -1,0 +1,9 @@
+[PPS]
+oem=creatent
+dev_type=demo
+dev_id=abcde0123456780
+
+[PPL]
+gid=11
+pid=13
+auth=05007528ba802515a3ed87ffb8960bc7

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GVUI version="0.1">
+<GWindow>
+	<id>2</id>
+    <name>warning dialog</name>
+	<geometry>(460,240,360,240)</geometry>
+    <item index="0" class="GLabel" name="info">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>disable</focus>
+		    <geometry>(20,20,320,150)</geometry>
+			<fontsize>20</fontsize>
+			<alignment>AlignCenter</alignment>
+			<multiline>1</multiline>
+			<color_disable>(0,0,0,255)</color_disable>
+		</attribute>
+    </item>  
+	<item index="1" class="GButton" name="ok">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>enable</focus>
+			<geometry>(35,190,130,40)</geometry>
+			<fontsize>22</fontsize>
+			<alignment>AlignCenter</alignment>
+			<caption>ok</caption>
+		</attribute>
+	</item>
+	<item index="2" class="GButton" name="cancel">
+		<action></action>
+		<href></href>
+		<attribute>
+			<focus>enable</focus>
+			<geometry>(195,190,130,40)</geometry>
+			<fontsize>22</fontsize>
+			<alignment>AlignCenter</alignment>
+			<caption>cancel</caption>		
+		</attribute>
+	</item>
+</GWindow>
+</GVUI>

@@ -1,0 +1,10 @@
+::sysinit:/etc/init.d/rcS
+
+#ttySAC0::respawn:-/bin/sh
+::respawn:/sbin/getty -L ttySAC0 115200 vt100
+
+::once:/etc/init.d/rc.demo
+
+::ctrlaltdel:/sbin/reboot
+::shutdown:/bin/umount -a -r
+::shutdown:/sbin/swapoff -a

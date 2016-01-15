@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languageset>
+    <language>
+		<type>0</type>
+		<caption><![CDATA[English]]></caption>
+		<code>en</code>
+    </language>  
+	<language>
+		<type>1</type>
+		<caption><![CDATA[简体中文]]></caption>
+		<code>zh-CN</code>
+    </language>   
+	<language>
+		<type>2</type>
+		<caption><![CDATA[繁體中文]]></caption>
+		<code>zh-CHT</code>
+    </language>  
+	<language>
+		<type>3</type>
+		<caption><![CDATA[한국어]]></caption>
+		<code>ko</code>
+    </language>
+	<language>
+		<type>4</type>
+		<caption><![CDATA[日本語]]></caption>
+		<code>ja</code>
+    </language> 
+</languageset>
+
